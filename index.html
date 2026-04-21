@@ -3,341 +3,37 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kenneth Edbert – Coffee Professional</title>
+<title id="judul-website"></title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --espresso: #1E0F05;
-    --dark-brown: #2C1A0E;
-    --med-brown: #4A2C17;
-    --warm-brown: #7B4A2D;
-    --gold: #C8903C;
-    --light-gold: #E8B86D;
-    --cream: #F5E6D0;
-    --light-cream: #FAF3E8;
-    --olive: #4D5E35;
-    --light-olive: #6B7F4A;
-    --fog: #D6C9B8;
-    --white: #FFFDF9;
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--light-cream);
-    color: var(--dark-brown);
-    overflow-x: hidden;
-  }
+<link rel="stylesheet" href="style.css">
 
-  /* Grain */
-  body::after {
-    content: '';
-    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    background: linear-gradient(to bottom, rgba(30,15,5,0.95), rgba(30,15,5,0.85));
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(200,144,60,0.2);
-    height: 72px;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 48px;
-  }
-  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .nav-logo-text { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 16px; font-weight: 700; letter-spacing: 0.04em; }
-  .nav-logo-sub { font-family: 'DM Sans', sans-serif; color: var(--gold); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 2px; }
-  .nav-links { display: flex; gap: 6px; }
-  .nav-btn {
-    background: transparent; border: 1px solid transparent;
-    border-radius: 10px; padding: 6px 18px; cursor: pointer;
-    transition: all 0.3s; text-align: center;
-  }
-  .nav-btn:hover, .nav-btn.active {
-    background: rgba(200,144,60,0.12);
-    border-color: rgba(200,144,60,0.5);
-  }
-  .nav-btn-id { font-family: 'Playfair Display', serif; color: var(--fog); font-size: 13px; display: block; transition: color 0.3s; }
-  .nav-btn.active .nav-btn-id { color: var(--gold); }
-  .nav-btn-en { font-family: 'DM Sans', sans-serif; color: rgba(214,201,184,0.5); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; display: block; transition: color 0.3s; }
-  .nav-btn.active .nav-btn-en { color: var(--light-gold); }
-
-  /* PAGES */
-  .page { display: none; animation: fadeIn 0.4s ease; }
-  .page.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-  /* HERO */
-  .hero {
-    padding: 140px 60px 80px;
-    position: relative; overflow: hidden;
-  }
-  .hero-label {
-    font-family: 'DM Sans', sans-serif; color: var(--light-gold);
-    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
-    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
-  }
-  .hero-label::before { content: ''; display: block; width: 40px; height: 1px; background: var(--light-gold); }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(34px, 5vw, 58px); font-weight: 400; line-height: 1.22;
-    margin-bottom: 24px; color: var(--cream);
-  }
-  .hero h1 span { color: var(--light-gold); font-weight: 700; font-style: normal; }
-  .hero p { font-family: 'DM Sans', sans-serif; color: var(--fog); font-size: 15px; line-height: 1.75; max-width: 520px; }
-  .hero-deco-circle {
-    position: absolute; border-radius: 50%;
-    border: 1px solid rgba(200,144,60,0.12);
-    pointer-events: none;
-  }
-
-  /* SECTION WRAPPER */
-  .section { padding: 60px 60px 80px; max-width: 1140px; margin: 0 auto; }
-  .section-title { display: flex; align-items: baseline; gap: 14px; margin-bottom: 32px; }
-  .section-title h2 { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--dark-brown); }
-  .section-title span { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--warm-brown); letter-spacing: 0.18em; text-transform: uppercase; }
-
-  /* GALLERY GRID */
-  .gallery { display: grid; grid-template-columns: repeat(6,1fr); grid-template-rows: 280px; gap: 10px; margin-bottom: 20px; }
-  .gallery-item {
-    border-radius: 14px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; cursor: pointer;
-    transition: all 0.3s; overflow: hidden; position: relative;
-  }
-  .gallery-item:hover { transform: scale(1.025); box-shadow: 0 18px 44px rgba(30,15,5,0.45); }
-  .gallery-item:hover .gallery-border { opacity: 1; }
-  .gallery-border { position: absolute; inset: 0; border: 2px solid rgba(200,144,60,0.55); border-radius: 14px; opacity: 0; transition: opacity 0.3s; }
-  .gallery-emoji { font-size: 44px; margin-bottom: 8px; transition: font-size 0.3s; }
-  .gallery-item:hover .gallery-emoji { font-size: 52px; }
-  .gallery-label { font-family: 'DM Sans', sans-serif; color: var(--cream); font-size: 11px; letter-spacing: 0.08em; text-align: center; padding: 0 10px; opacity: 0.75; transition: opacity 0.3s; }
-  .gallery-item:hover .gallery-label { opacity: 1; }
-
-  /* EXPERIENCE CARDS */
-  .exp-card {
-    background: var(--white); border-radius: 20px;
-    border: 1px solid rgba(214,201,184,0.5);
-    overflow: hidden; display: grid; grid-template-columns: 5px 1fr;
-    margin-bottom: 20px; box-shadow: 0 4px 20px rgba(30,15,5,0.06);
-  }
-  .exp-stripe { border-radius: 20px 0 0 20px; }
-  .exp-body { padding: 28px 34px; }
-  .exp-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
-  .exp-title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
-  .exp-cafe { font-family: 'Playfair Display', serif; font-size: 21px; color: var(--dark-brown); font-weight: 700; }
-  .exp-badge { border-radius: 100px; padding: 3px 13px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; }
-  .exp-location { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--warm-brown); }
-  .exp-period { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--fog); font-style: italic; }
-  .exp-desc { font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--med-brown); line-height: 1.7; margin-bottom: 18px; }
-  .exp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .exp-chip { background: var(--light-cream); border: 1px solid var(--fog); border-radius: 8px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--dark-brown); }
-
-  /* CTA */
-  .cta-wrap { text-align: center; margin-top: 48px; }
-  .cta-btn {
-    background: linear-gradient(135deg, var(--gold), var(--light-gold));
-    border: none; border-radius: 100px; padding: 16px 50px;
-    font-family: 'Playfair Display', serif; font-size: 16px;
-    color: var(--espresso); font-weight: 700; cursor: pointer;
-    box-shadow: 0 10px 36px rgba(200,144,60,0.38);
-    letter-spacing: 0.05em; transition: all 0.3s;
-  }
-  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(200,144,60,0.5); }
-
-  /* SOCIAL MEDIA */
-  .social-bar {
-    display: flex; gap: 14px; align-items: center;
-    justify-content: center; margin-top: 36px; flex-wrap: wrap;
-  }
-  .social-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; border-radius: 100px;
-    padding: 10px 22px; font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 600; transition: all 0.3s;
-    border: 1.5px solid;
-  }
-  .social-btn:hover { transform: translateY(-2px); }
-  .social-instagram { background: rgba(200,144,60,0.1); border-color: rgba(200,144,60,0.5); color: var(--light-gold); }
-  .social-instagram:hover { background: rgba(200,144,60,0.2); }
-  .social-tiktok { background: rgba(255,255,255,0.05); border-color: rgba(214,201,184,0.4); color: var(--fog); }
-  .social-tiktok:hover { background: rgba(255,255,255,0.1); }
-  .social-linkedin { background: rgba(77,94,53,0.15); border-color: rgba(107,127,74,0.5); color: var(--light-olive); }
-  .social-linkedin:hover { background: rgba(77,94,53,0.25); }
-  .social-lynk { background: rgba(200,144,60,0.15); border-color: rgba(200,144,60,0.6); color: var(--gold); }
-  .social-lynk:hover { background: rgba(200,144,60,0.25); }
-
-  /* ── CERTIFICATIONS ── */
-  .cert-stats { display: flex; gap: 44px; margin-top: 40px; }
-  .cert-stat-num { font-family: 'Playfair Display', serif; color: var(--light-gold); font-size: 38px; font-weight: 700; line-height: 1; }
-  .cert-stat-label { font-family: 'DM Sans', sans-serif; color: var(--fog); font-size: 12px; letter-spacing: 0.1em; margin-top: 4px; }
-
-  .cert-category { margin-bottom: 44px; }
-  .cert-cat-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
-  .cert-cat-icon {
-    width: 50px; height: 50px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center; font-size: 22px;
-  }
-  .cert-cat-name { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--dark-brown); font-weight: 700; }
-  .cert-cat-line { width: 60px; height: 2px; border-radius: 2px; margin-top: 5px; }
-  .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 16px; }
-
-  .cert-card {
-    background: var(--white); border-radius: 20px;
-    border: 1.5px solid rgba(214,201,184,0.5);
-    overflow: hidden; cursor: pointer;
-    box-shadow: 0 3px 16px rgba(30,15,5,0.06);
-    transition: all 0.3s;
-  }
-  .cert-card:hover { box-shadow: 0 12px 36px rgba(30,15,5,0.1); transform: translateY(-2px); }
-  .cert-card-top { padding: 20px 24px 16px; }
-  .cert-org { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
-  .cert-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--dark-brown); font-weight: 700; line-height: 1.4; }
-  .cert-card-body { padding: 14px 24px 20px; }
-  .cert-grade-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    border-radius: 100px; padding: 3px 12px; margin-bottom: 10px;
-  }
-  .cert-grade-dot { width: 6px; height: 6px; border-radius: 50%; }
-  .cert-grade-text { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; }
-  .cert-year { font-family: 'DM Sans', sans-serif; font-size: 10px; background: rgba(214,201,184,0.3); padding: 2px 8px; border-radius: 100px; color: var(--fog); }
-  .cert-desc {
-    font-family: 'DM Sans', sans-serif; font-size: 13px;
-    color: var(--med-brown); line-height: 1.65;
-    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
-  }
-  .cert-desc.open { max-height: 120px; }
-  .cert-toggle { font-family: 'DM Sans', sans-serif; font-size: 11px; opacity: 0.65; margin-top: 6px; }
-
-  /* ── SKILLS ── */
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr)); gap: 16px; margin-bottom: 60px; }
-  .skill-hard-card {
-    background: var(--white); border-radius: 18px;
-    padding: 22px 24px; display: flex; gap: 16px;
-    border: 1.5px solid rgba(214,201,184,0.5);
-    box-shadow: 0 4px 18px rgba(30,15,5,0.05);
-    transition: all 0.3s;
-  }
-  .skill-hard-card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(30,15,5,0.1); }
-  .skill-icon-wrap {
-    width: 56px; height: 56px; border-radius: 16px; flex-shrink: 0;
-    background: linear-gradient(135deg, var(--light-cream), rgba(214,201,184,0.4));
-    border: 1px solid var(--fog);
-    display: flex; align-items: center; justify-content: center; font-size: 26px;
-  }
-  .skill-name { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--dark-brown); font-weight: 700; margin-bottom: 4px; }
-  .skill-desc { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--warm-brown); line-height: 1.5; margin-bottom: 10px; }
-  .skill-tag-row { display: flex; align-items: center; justify-content: space-between; }
-  .skill-tag { border-radius: 100px; padding: 2px 10px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700; }
-  .skill-beans { display: flex; gap: 4px; }
-
-  .divider { display: flex; align-items: center; gap: 20px; margin: 0 0 48px; }
-  .divider-line { flex: 1; height: 1px; }
-
-  .soft-card {
-    background: var(--white); border-radius: 16px;
-    padding: 22px 28px; margin-bottom: 16px;
-    border: 1px solid rgba(214,201,184,0.5);
-    box-shadow: 0 2px 12px rgba(30,15,5,0.05);
-  }
-  .soft-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .soft-left { display: flex; align-items: center; gap: 12px; }
-  .soft-emoji { font-size: 20px; }
-  .soft-title { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--dark-brown); font-weight: 700; }
-  .soft-subdesc { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--warm-brown); }
-  .soft-pct { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); font-weight: 700; }
-  .bar-track { height: 8px; background: rgba(214,201,184,0.4); border-radius: 100px; overflow: hidden; position: relative; }
-  .bar-fill {
-    height: 100%; border-radius: 100px;
-    background: linear-gradient(90deg, var(--med-brown), var(--gold));
-    transition: width 1.3s cubic-bezier(0.4,0,0.2,1);
-    position: relative;
-  }
-  .bar-fill::after {
-    content: ''; position: absolute; right: -1px; top: 50%;
-    transform: translateY(-50%); width: 12px; height: 12px;
-    border-radius: 50%; background: var(--gold);
-    box-shadow: 0 0 8px rgba(200,144,60,0.8);
-  }
-
-  .sensory-box {
-    background: linear-gradient(135deg, var(--espresso), var(--dark-brown));
-    border-radius: 24px; padding: 36px 40px;
-    display: flex; align-items: center; gap: 32px; margin-top: 48px;
-  }
-  .sensory-icon { font-size: 60px; flex-shrink: 0; }
-  .sensory-sub { font-family: 'DM Sans', sans-serif; color: var(--gold); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px; }
-  .sensory-title { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 22px; margin-bottom: 12px; font-weight: 700; }
-  .sensory-desc { font-family: 'DM Sans', sans-serif; color: var(--fog); font-size: 13px; line-height: 1.7; margin-bottom: 16px; }
-  .sensory-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-  .sensory-tag { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--light-gold); border: 1px solid rgba(200,144,60,0.4); border-radius: 100px; padding: 3px 12px; }
-
-  /* FOOTER */
-  footer {
-    background: var(--espresso);
-    border-top: 1px solid rgba(200,144,60,0.18);
-    padding: 36px 60px;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 16px;
-  }
-  footer .f-name { font-family: 'Playfair Display', serif; color: var(--fog); font-size: 14px; font-style: italic; }
-  footer .f-copy { font-family: 'DM Sans', sans-serif; color: rgba(214,201,184,0.5); font-size: 11px; letter-spacing: 0.1em; }
-
-  /* STEAM ANIMATION */
-  .steam-wrap { position: absolute; top: 80px; right: 120px; color: var(--cream); opacity: 0.5; pointer-events: none; }
-  @keyframes s1 { 0%,100%{transform:translateY(0) scaleX(1)} 50%{transform:translateY(-9px) scaleX(1.3)} }
-  @keyframes s2 { 0%,100%{transform:translateY(0) scaleX(1)} 50%{transform:translateY(-11px) scaleX(0.8)} }
-  @keyframes s3 { 0%,100%{transform:translateY(0) scaleX(1)} 50%{transform:translateY(-7px) scaleX(1.2)} }
-  .sp1{animation:s1 2.5s ease-in-out infinite; transform-origin: center;}
-  .sp2{animation:s2 2.8s ease-in-out infinite 0.4s; transform-origin: center;}
-  .sp3{animation:s3 2.3s ease-in-out infinite 0.8s; transform-origin: center;}
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 0 16px; }
-    .nav-links { gap: 2px; }
-    .nav-btn { padding: 4px 10px; }
-    .hero { padding: 110px 24px 60px; }
-    .section { padding: 40px 24px 60px; }
-    .gallery { grid-template-columns: repeat(3,1fr); grid-template-rows: 180px 180px; }
-    footer { flex-direction: column; text-align: center; padding: 28px 24px; }
-    .cert-stats { gap: 24px; }
-    .sensory-box { flex-direction: column; padding: 28px 24px; }
-  }
-</style>
 </head>
 <body>
-
 <!-- ══ NAVIGATION ══ -->
 <nav>
-  <a class="nav-logo" href="#">
-    <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
-      <rect x="14" y="8" width="12" height="8" rx="2" stroke="#C8903C" stroke-width="1.5"/>
-      <path d="M12 16 Q8 20 8 26 Q8 32 20 32 Q32 32 32 26 Q32 20 28 16" stroke="#C8903C" stroke-width="1.5" fill="none"/>
-      <line x1="20" y1="8" x2="20" y2="4" stroke="#C8903C" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="15" y1="32" x2="13" y2="37" stroke="#C8903C" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="25" y1="32" x2="27" y2="37" stroke="#C8903C" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <div>
-      <div class="nav-logo-text">Kenneth Edbert</div>
-      <div class="nav-logo-sub">Coffee Professional</div>
+  <div class="nav-brand">
+    <a id="nav_logo" href="#"></a>
+    <div class="nav-text-group">
+      <div class="nav-logo-text">
+        <h1 id="nav_logo_text"></h1>
+      </div>
+      <div class="nav-logo-sub">
+        <h5 id="nav_logo_sub"></h5>
+      </div>
     </div>
-  </a>
+  </div>
+
   <div class="nav-links">
     <button class="nav-btn active" onclick="showPage('portfolio',this)">
-      <span class="nav-btn-id">Jejak Seduh</span>
-      <span class="nav-btn-en">Work Portfolio</span>
+      <span class="nav-btn-id"><h3 id="nav_about"></h3></span>
+      <span class="nav-btn-en"><h5 id="nav_about2"></h5></span>
     </button>
     <button class="nav-btn" onclick="showPage('certifications',this)">
-      <span class="nav-btn-id">Kredensial</span>
-      <span class="nav-btn-en">Certifications</span>
+      <span class="nav-btn-id"><h3 id="nav_sertifikat"></h3></span>
+      <span class="nav-btn-en"><h5 id="nav_sertifikat2"></h5></span>
     </button>
-    <button class="nav-btn" onclick="showPage('skills',this)">
-      <span class="nav-btn-id">Racikan Kemampuan</span>
-      <span class="nav-btn-en">Skills</span>
-    </button>
+   
   </div>
 </nav>
 
@@ -361,62 +57,24 @@
 
     <div style="position:relative; max-width:820px;">
       <div class="hero-label">Work Portfolio</div>
-      <h1>Menyeduh Pengalaman,<br><span>Menciptakan Momen.</span></h1>
-      <p>Lebih dari 4 tahun di industri kopi spesialti — dari belakang bar hingga konsultasi kafe. Setiap cangkir adalah pernyataan kualitas.</p>
+      <h1 id="main_judul">
+      </h1>
+      <p id="main_deskripsi"></p>
 
       <!-- Social media in hero -->
       <div class="social-bar" style="justify-content:flex-start; margin-top:32px;">
-        <a href="https://www.instagram.com/kennethedbert" target="_blank" class="social-btn social-instagram">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          @kennethedbert
+        <a id='link_ig' href="" target="_blank" class="social-btn social-instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> <h3 id="nama_ig"></h3>
         </a>
-        <a href="https://www.tiktok.com/@kennethedbert" target="_blank" class="social-btn social-tiktok">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.82a8.18 8.18 0 0 0 4.78 1.52V6.88a4.85 4.85 0 0 1-1.01-.19z"/></svg>
-          TikTok
+        <a id="link_tktk" href="" target="_blank" class="social-btn social-tiktok">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.82a8.18 8.18 0 0 0 4.78 1.52V6.88a4.85 4.85 0 0 1-1.01-.19z"/></svg><h3 id="nama_tktk"></h3>
+          
         </a>
-        <a href="https://linkedin.com/in/kennethedbert" target="_blank" class="social-btn social-linkedin">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
+        <a id="link_linkedin" href="" target="_blank" class="social-btn social-linkedin">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> <h3 id="nama_linkedin"></h3>
+          
         </a>
-        <a href="https://lynk.id/kennethedbert" target="_blank" class="social-btn social-lynk">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          lynk.id/kennethedbert
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- GALLERY -->
-  <div class="section" style="padding-bottom: 20px;">
-    <div class="section-title">
-      <h2>Aksi di Lapangan</h2>
-      <span>Field Gallery</span>
-    </div>
-    <div class="gallery">
-      <div class="gallery-item" style="grid-column:span 2; background:linear-gradient(135deg,#4A2C17,#2C1A0E);">
-        <div class="gallery-emoji">☕</div>
-        <div class="gallery-label">Espresso Calibration</div>
-        <div class="gallery-border"></div>
-      </div>
-      <div class="gallery-item" style="grid-column:span 1; background:linear-gradient(135deg,#4D5E35,#6B7F4A);">
-        <div class="gallery-emoji">🌿</div>
-        <div class="gallery-label">Latte Art – Rosetta</div>
-        <div class="gallery-border"></div>
-      </div>
-      <div class="gallery-item" style="grid-column:span 1; background:linear-gradient(135deg,#2C1A0E,#7B4A2D);">
-        <div class="gallery-emoji">💧</div>
-        <div class="gallery-label">Manual Brew – V60</div>
-        <div class="gallery-border"></div>
-      </div>
-      <div class="gallery-item" style="grid-column:span 1; background:linear-gradient(135deg,#7B4A2D,rgba(200,144,60,0.7));">
-        <div class="gallery-emoji">🫘</div>
-        <div class="gallery-label">Cupping Session</div>
-        <div class="gallery-border"></div>
-      </div>
-      <div class="gallery-item" style="grid-column:span 2; background:linear-gradient(135deg,#6B7F4A,#4D5E35);">
-        <div class="gallery-emoji">🥛</div>
-        <div class="gallery-label">Milk Steaming</div>
-        <div class="gallery-border"></div>
+        
       </div>
     </div>
   </div>
@@ -424,87 +82,19 @@
   <!-- EXPERIENCE -->
   <div class="section" style="padding-top:20px;">
     <div class="section-title">
-      <h2>Riwayat Pengalaman</h2>
-      <span>Work Experience</span>
+      <h2 id="judul_work_experience"></h2>
+      <span>
+        <h3 id="judul_work_experience2"></h3>
+      </span>
     </div>
 
-    <!-- Card 1 -->
-    <div class="exp-card">
-      <div class="exp-stripe" style="background:#C8903C;"></div>
-      <div class="exp-body">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title-row">
-              <span class="exp-cafe">Anomali Coffee</span>
-              <span class="exp-badge" style="background:rgba(200,144,60,0.15);border:1px solid rgba(200,144,60,0.45);color:#C8903C;">Head Barista</span>
-            </div>
-            <div class="exp-location">📍 Jakarta Selatan</div>
-          </div>
-          <div class="exp-period">2022 – Sekarang</div>
-        </div>
-        <p class="exp-desc">Memimpin operasional bar harian, menjaga konsistensi rasa & standar kualitas, serta membimbing tim barista junior dalam teknik espresso dan manual brew.</p>
-        <div class="exp-chips">
-          <span class="exp-chip">↑ Penjualan signature beverage +30% Q1 2023</span>
-          <span class="exp-chip">12 resep baru menu seasonal</span>
-          <span class="exp-chip">Melatih 5 barista junior</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="exp-card">
-      <div class="exp-stripe" style="background:#6B7F4A;"></div>
-      <div class="exp-body">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title-row">
-              <span class="exp-cafe">SATURDAYS Coffee</span>
-              <span class="exp-badge" style="background:rgba(77,94,53,0.15);border:1px solid rgba(107,127,74,0.45);color:#6B7F4A;">Senior Barista</span>
-            </div>
-            <div class="exp-location">📍 Jakarta Pusat</div>
-          </div>
-          <div class="exp-period">2020 – 2022</div>
-        </div>
-        <p class="exp-desc">Bertanggung jawab atas kalibrasi mesin espresso harian, pengelolaan stok bahan baku, dan menjadi PIC untuk cupping session rutin bersama tim.</p>
-        <div class="exp-chips">
-          <span class="exp-chip">Skor kualitas ekstraksi &gt;92% konsisten</span>
-          <span class="exp-chip">Cupping session mingguan – QC</span>
-          <span class="exp-chip">Employee of the Month – Jun 2021</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="exp-card">
-      <div class="exp-stripe" style="background:#7B4A2D;"></div>
-      <div class="exp-body">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title-row">
-              <span class="exp-cafe">Konsultasi Set-up Kafe</span>
-              <span class="exp-badge" style="background:rgba(123,74,45,0.15);border:1px solid rgba(123,74,45,0.45);color:#7B4A2D;">Coffee Bar Consultant</span>
-            </div>
-            <div class="exp-location">📍 Jabodetabek</div>
-          </div>
-          <div class="exp-period">2021 – 2023</div>
-        </div>
-        <p class="exp-desc">Membantu 3 kafe baru merancang alur kerja bar, memilih peralatan, menyusun menu, dan melatih tim opening hingga siap beroperasi.</p>
-        <div class="exp-chips">
-          <span class="exp-chip">3 proyek kafe buka tepat waktu</span>
-          <span class="exp-chip">SOP operasional bar lengkap</span>
-          <span class="exp-chip">Menu development dari 0 – launch</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cta-wrap">
-      <button class="cta-btn" onclick="window.open('https://lynk.id/kennethedbert','_blank')">☕ Mari Berkolaborasi</button>
-    </div>
+    <div id="experience-container">
+</div>
   </div>
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE 2 — CERTIFICATIONS
+     PAGE 2 — CERTIFICATIONS AND SKILLS ETC
 ══════════════════════════════════════ -->
 <div id="page-certifications" class="page">
 
@@ -521,364 +111,48 @@
       </svg>
     </div>
     <div style="position:relative;max-width:820px;">
-      <div class="hero-label">Certifications &amp; Credentials</div>
-      <h1>Standar Kualitas<br><span>yang Tervalidasi.</span></h1>
-      <p>Setiap sertifikat adalah bukti komitmen terhadap standar tertinggi dalam industri kopi dan F&B profesional.</p>
-      <div class="cert-stats">
-        <div><div class="cert-stat-num">7+</div><div class="cert-stat-label">Sertifikasi</div></div>
-        <div><div class="cert-stat-num">3</div><div class="cert-stat-label">Kategori</div></div>
-        <div><div class="cert-stat-num">4+</div><div class="cert-stat-label">Tahun Aktif</div></div>
+      <div class="hero-label">
+        <h5 id="hero_label"></h5>
       </div>
+      <h1 id="judul_2"></h1>
+      <p id="sec_description"></p>
+      
     </div>
   </div>
 
   <div class="section">
-
-    <!-- Category 1: SCA -->
-    <div class="cert-category">
-      <div class="cert-cat-header">
-        <div class="cert-cat-icon" style="background:rgba(200,144,60,0.15);border:1.5px solid rgba(200,144,60,0.4);">🏅</div>
-        <div>
-          <div class="cert-cat-name">SCA – Specialty Coffee Association</div>
-          <div class="cert-cat-line" style="background:#C8903C;"></div>
-        </div>
-      </div>
-      <div class="cert-grid">
-        <div class="cert-card" onclick="toggleCert(this)" style="border-color:rgba(214,201,184,0.5);">
-          <div class="cert-card-top" style="background:linear-gradient(135deg,rgba(200,144,60,0.15),rgba(200,144,60,0.04));border-bottom:1px solid rgba(200,144,60,0.18);">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-              <div class="cert-org" style="color:#C8903C;">SCA Authorized</div>
-              <span class="cert-year">2021</span>
-            </div>
-            <div class="cert-name">Barista Skills – Foundation</div>
-          </div>
-          <div class="cert-card-body">
-            <div class="cert-grade-badge" style="background:rgba(200,144,60,0.12);border:1px solid rgba(200,144,60,0.35);">
-              <div class="cert-grade-dot" style="background:#C8903C;"></div>
-              <span class="cert-grade-text" style="color:#C8903C;">Pass with Distinction</span>
-            </div>
-            <div class="cert-desc">Penguasaan dasar teknik espresso, steam milk, dan konsistensi resep standar SCA.</div>
-            <div class="cert-toggle" style="color:#C8903C;">▼ Lihat detail</div>
-          </div>
-        </div>
-        <div class="cert-card" onclick="toggleCert(this)">
-          <div class="cert-card-top" style="background:linear-gradient(135deg,rgba(200,144,60,0.15),rgba(200,144,60,0.04));border-bottom:1px solid rgba(200,144,60,0.18);">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-              <div class="cert-org" style="color:#C8903C;">SCA Authorized</div>
-              <span class="cert-year">2022</span>
-            </div>
-            <div class="cert-name">Barista Skills – Intermediate</div>
-          </div>
-          <div class="cert-card-body">
-            <div class="cert-grade-badge" style="background:rgba(200,144,60,0.12);border:1px solid rgba(200,144,60,0.35);">
-              <div class="cert-grade-dot" style="background:#C8903C;"></div>
-              <span class="cert-grade-text" style="color:#C8903C;">Pass</span>
-            </div>
-            <div class="cert-desc">Kalibrasi lanjutan, water chemistry, dan analisis sensori espresso tingkat menengah.</div>
-            <div class="cert-toggle" style="color:#C8903C;">▼ Lihat detail</div>
-          </div>
-        </div>
-        <div class="cert-card" onclick="toggleCert(this)">
-          <div class="cert-card-top" style="background:linear-gradient(135deg,rgba(200,144,60,0.15),rgba(200,144,60,0.04));border-bottom:1px solid rgba(200,144,60,0.18);">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-              <div class="cert-org" style="color:#C8903C;">SCA Authorized</div>
-              <span class="cert-year">2022</span>
-            </div>
-            <div class="cert-name">Sensory Skills – Foundation</div>
-          </div>
-          <div class="cert-card-body">
-            <div class="cert-grade-badge" style="background:rgba(200,144,60,0.12);border:1px solid rgba(200,144,60,0.35);">
-              <div class="cert-grade-dot" style="background:#C8903C;"></div>
-              <span class="cert-grade-text" style="color:#C8903C;">Pass</span>
-            </div>
-            <div class="cert-desc">Identifikasi rasa, aroma, dan tekstur kopi spesialti melalui triangle test dan cupping protokol SCA.</div>
-            <div class="cert-toggle" style="color:#C8903C;">▼ Lihat detail</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Category 2: BNSP -->
-    <div class="cert-category">
-      <div class="cert-cat-header">
-        <div class="cert-cat-icon" style="background:rgba(77,94,53,0.15);border:1.5px solid rgba(107,127,74,0.4);">🇮🇩</div>
-        <div>
-          <div class="cert-cat-name">BNSP – Kompetensi Nasional</div>
-          <div class="cert-cat-line" style="background:#6B7F4A;"></div>
-        </div>
-      </div>
-      <div class="cert-grid">
-        <div class="cert-card" onclick="toggleCert(this)">
-          <div class="cert-card-top" style="background:linear-gradient(135deg,rgba(77,94,53,0.15),rgba(77,94,53,0.04));border-bottom:1px solid rgba(107,127,74,0.2);">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-              <div class="cert-org" style="color:#6B7F4A;">BNSP / LSP F&B</div>
-              <span class="cert-year">2021</span>
-            </div>
-            <div class="cert-name">Kompetensi Barista Nasional</div>
-          </div>
-          <div class="cert-card-body">
-            <div class="cert-grade-badge" style="background:rgba(77,94,53,0.12);border:1px solid rgba(107,127,74,0.4);">
-              <div class="cert-grade-dot" style="background:#6B7F4A;"></div>
-              <span class="cert-grade-text" style="color:#6B7F4A;">Kompeten</span>
-            </div>
-            <div class="cert-desc">Sertifikasi kompetensi barista resmi Pemerintah Indonesia, mencakup standar operasi, keamanan pangan, dan teknik penyajian.</div>
-            <div class="cert-toggle" style="color:#6B7F4A;">▼ Lihat detail</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Category 3: Pelatihan -->
-    <div class="cert-category">
-      <div class="cert-cat-header">
-        <div class="cert-cat-icon" style="background:rgba(123,74,45,0.15);border:1.5px solid rgba(123,74,45,0.4);">📋</div>
-        <div>
-          <div class="cert-cat-name">Pelatihan &amp; Kelas Spesialis</div>
-          <div class="cert-cat-line" style="background:#7B4A2D;"></div>
-        </div>
-      </div>
-      <div class="cert-grid">
-        <div class="cert-card" onclick="toggleCert(this)">
-          <div class="cert-card-top" style="background:linear-gradient(135deg,rgba(123,74,45,0.12),rgba(123,74,45,0.03));border-bottom:1px solid rgba(123,74,45,0.18);">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-              <div class="cert-org" style="color:#7B4A2D;">BPOM Training Center</div>
-              <span class="cert-year">2020</span>
-            </div>
-            <div class="cert-name">Food Safety &amp; Hygiene</div>
-          </div>
-          <div class="cert-card-body">
-            <div class="cert-grade-badge" style="background:rgba(123,74,45,0.1);border:1px solid rgba(123,74,45,0.35);">
-              <div class="cert-grade-dot" style="background:#7B4A2D;"></div>
-              <span class="cert-grade-text" style="color:#7B4A2D;">Lulus</span>
-            </div>
-            <div class="cert-desc">Standar higienitas pangan, penanganan bahan baku, dan sanitasi area kerja F&B.</div>
-            <div class="cert-toggle" style="color:#7B4A2D;">▼ Lihat detail</div>
-          </div>
-        </div>
-        <div class="cert-card" onclick="toggleCert(this)">
-          <div class="cert-card-top" style="background:linear-gradient(135deg,rgba(123,74,45,0.12),rgba(123,74,45,0.03));border-bottom:1px solid rgba(123,74,45,0.18);">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-              <div class="cert-org" style="color:#7B4A2D;">Specialty Coffee Indonesia</div>
-              <span class="cert-year">2023</span>
-            </div>
-            <div class="cert-name">Basic Coffee Roasting Class</div>
-          </div>
-          <div class="cert-card-body">
-            <div class="cert-grade-badge" style="background:rgba(123,74,45,0.1);border:1px solid rgba(123,74,45,0.35);">
-              <div class="cert-grade-dot" style="background:#7B4A2D;"></div>
-              <span class="cert-grade-text" style="color:#7B4A2D;">Lulus</span>
-            </div>
-            <div class="cert-desc">Memahami kurva roasting, Maillard reaction, dan analisis green bean untuk profil rasa yang dituju.</div>
-            <div class="cert-toggle" style="color:#7B4A2D;">▼ Lihat detail</div>
-          </div>
-        </div>
-        <div class="cert-card" onclick="toggleCert(this)">
-          <div class="cert-card-top" style="background:linear-gradient(135deg,rgba(123,74,45,0.12),rgba(123,74,45,0.03));border-bottom:1px solid rgba(123,74,45,0.18);">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-              <div class="cert-org" style="color:#7B4A2D;">Prasetiya Mulya Executive</div>
-              <span class="cert-year">2023</span>
-            </div>
-            <div class="cert-name">Cafe Operations Management</div>
-          </div>
-          <div class="cert-card-body">
-            <div class="cert-grade-badge" style="background:rgba(123,74,45,0.1);border:1px solid rgba(123,74,45,0.35);">
-              <div class="cert-grade-dot" style="background:#7B4A2D;"></div>
-              <span class="cert-grade-text" style="color:#7B4A2D;">Lulus</span>
-            </div>
-            <div class="cert-desc">Manajemen operasional kafe: COGS, pricing strategy, SOP bar, dan leadership tim F&B.</div>
-            <div class="cert-toggle" style="color:#7B4A2D;">▼ Lihat detail</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <div id="sertifikasi-container"></div>
+    <div id="pelatihan-container"></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PAGE 3 — SKILLS
-══════════════════════════════════════ -->
-<div id="page-skills" class="page">
 
-  <div class="hero" style="background:linear-gradient(150deg,#1E0F05 0%,#4A2C17 40%,#7B4A2D 100%);">
-    <!-- Floating bean deco -->
-    <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
-      <div style="position:absolute;top:15%;right:8%;opacity:0.05;transform:rotate(0deg);">☕</div>
-      <div style="position:absolute;top:35%;right:20%;opacity:0.06;font-size:50px;">🫘</div>
-      <div style="position:absolute;top:60%;right:10%;opacity:0.04;font-size:70px;transform:rotate(25deg);">☕</div>
-    </div>
-    <div style="position:relative;max-width:820px;">
-      <div class="hero-label">Skills &amp; Expertise</div>
-      <h1>Spesialisasi di Balik<br><span>Meja Bar.</span></h1>
-      <p>Keterampilan teknis yang diasah setiap hari — dari kalibrasi espresso hingga pengembangan menu dan manajemen tim.</p>
-    </div>
-  </div>
 
-  <div class="section">
-    <!-- HARD SKILLS -->
-    <div class="section-title" style="margin-bottom:8px;">
-      <h2>Keterampilan Teknis</h2>
-      <span>Hard Skills</span>
-    </div>
-    <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--warm-brown);font-style:italic;margin-bottom:28px;">Rating skala biji kopi ☕ — 5 biji = tingkat mahir tertinggi</p>
-
-    <div class="skills-grid">
-      <!-- Skill cards -->
-      <div class="skill-hard-card">
-        <div class="skill-icon-wrap">☕</div>
-        <div style="flex:1;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-            <div class="skill-name">Espresso Calibration</div>
-            <span class="skill-tag" style="background:rgba(200,144,60,0.18);border:1px solid rgba(200,144,60,0.5);color:#C8903C;">Expert</span>
-          </div>
-          <div class="skill-desc">Dial-in mesin, TDS, & extraction yield control</div>
-          <div class="skill-beans" id="beans-0"></div>
-        </div>
-      </div>
-      <div class="skill-hard-card">
-        <div class="skill-icon-wrap">💧</div>
-        <div style="flex:1;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-            <div class="skill-name">Manual Brew</div>
-            <span class="skill-tag" style="background:rgba(200,144,60,0.18);border:1px solid rgba(200,144,60,0.5);color:#C8903C;">Expert</span>
-          </div>
-          <div class="skill-desc">Pour Over (V60, Chemex), Aeropress, Syphon</div>
-          <div class="skill-beans" id="beans-1"></div>
-        </div>
-      </div>
-      <div class="skill-hard-card">
-        <div class="skill-icon-wrap">🫘</div>
-        <div style="flex:1;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-            <div class="skill-name">Sensory &amp; Cupping</div>
-            <span class="skill-tag" style="background:rgba(77,94,53,0.15);border:1px solid rgba(107,127,74,0.5);color:#6B7F4A;">Advanced</span>
-          </div>
-          <div class="skill-desc">Tasting notes, triangulation, QC biji kopi</div>
-          <div class="skill-beans" id="beans-2"></div>
-        </div>
-      </div>
-      <div class="skill-hard-card">
-        <div class="skill-icon-wrap">🎨</div>
-        <div style="flex:1;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-            <div class="skill-name">Latte Art</div>
-            <span class="skill-tag" style="background:rgba(77,94,53,0.15);border:1px solid rgba(107,127,74,0.5);color:#6B7F4A;">Advanced</span>
-          </div>
-          <div class="skill-desc">Rosetta, Tulip, Swan – free pour & etching</div>
-          <div class="skill-beans" id="beans-3"></div>
-        </div>
-      </div>
-      <div class="skill-hard-card">
-        <div class="skill-icon-wrap">🔥</div>
-        <div style="flex:1;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-            <div class="skill-name">Roasting Basics</div>
-            <span class="skill-tag" style="background:rgba(123,74,45,0.15);border:1px solid rgba(123,74,45,0.5);color:#7B4A2D;">Intermediate</span>
-          </div>
-          <div class="skill-desc">Green bean analysis, roast profiling</div>
-          <div class="skill-beans" id="beans-4"></div>
-        </div>
-      </div>
-      <div class="skill-hard-card">
-        <div class="skill-icon-wrap">🧪</div>
-        <div style="flex:1;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-            <div class="skill-name">Water Chemistry</div>
-            <span class="skill-tag" style="background:rgba(77,94,53,0.15);border:1px solid rgba(107,127,74,0.5);color:#6B7F4A;">Advanced</span>
-          </div>
-          <div class="skill-desc">TDS, pH balancing, mineral profiling brew</div>
-          <div class="skill-beans" id="beans-5"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Divider -->
-    <div class="divider">
-      <div class="divider-line" style="background:linear-gradient(to right,transparent,var(--fog));"></div>
-      <span style="font-size:18px;">🫘</span>
-      <div class="divider-line" style="background:linear-gradient(to left,transparent,var(--fog));"></div>
-    </div>
-
-    <!-- SOFT SKILLS -->
-    <div class="section-title">
-      <h2>Keterampilan Manajerial</h2>
-      <span>Soft Skills</span>
-    </div>
-
-    <div class="soft-card">
-      <div class="soft-header">
-        <div class="soft-left"><span class="soft-emoji">📦</span><div><div class="soft-title">Inventory Management</div><div class="soft-subdesc">Manajemen stok bahan baku, FIFO, ordering cycle</div></div></div>
-        <div class="soft-pct">90%</div>
-      </div>
-      <div class="bar-track"><div class="bar-fill" data-width="90" style="width:0%"></div></div>
-    </div>
-    <div class="soft-card">
-      <div class="soft-header">
-        <div class="soft-left"><span class="soft-emoji">👥</span><div><div class="soft-title">Team Leadership &amp; Training</div><div class="soft-subdesc">Coaching barista junior, briefing, evaluasi standar</div></div></div>
-        <div class="soft-pct">88%</div>
-      </div>
-      <div class="bar-track"><div class="bar-fill" data-width="88" style="width:0%"></div></div>
-    </div>
-    <div class="soft-card">
-      <div class="soft-header">
-        <div class="soft-left"><span class="soft-emoji">🤝</span><div><div class="soft-title">Customer Engagement</div><div class="soft-subdesc">Hospitality, handling komplain, guest experience</div></div></div>
-        <div class="soft-pct">92%</div>
-      </div>
-      <div class="bar-track"><div class="bar-fill" data-width="92" style="width:0%"></div></div>
-    </div>
-    <div class="soft-card">
-      <div class="soft-header">
-        <div class="soft-left"><span class="soft-emoji">📝</span><div><div class="soft-title">Menu R&amp;D</div><div class="soft-subdesc">Riset tren, uji rasa, formula resep baru</div></div></div>
-        <div class="soft-pct">85%</div>
-      </div>
-      <div class="bar-track"><div class="bar-fill" data-width="85" style="width:0%"></div></div>
-    </div>
-    <div class="soft-card">
-      <div class="soft-header">
-        <div class="soft-left"><span class="soft-emoji">📊</span><div><div class="soft-title">COGS &amp; Pricing</div><div class="soft-subdesc">Kalkulasi biaya produk, margin pricing, F&B costing</div></div></div>
-        <div class="soft-pct">78%</div>
-      </div>
-      <div class="bar-track"><div class="bar-fill" data-width="78" style="width:0%"></div></div>
-    </div>
-
-    <!-- Sensory Box -->
-    <div class="sensory-box">
-      <div class="sensory-icon">🧭</div>
-      <div>
-        <div class="sensory-sub">Sensory Compass</div>
-        <div class="sensory-title">Profil Sensori &amp; Tasting Notes</div>
-        <div class="sensory-desc">Kemampuan mengidentifikasi lebih dari <strong style="color:var(--light-gold);">60+ tasting notes</strong> menggunakan SCA Flavor Wheel — dari florals, citrus, hingga chocolate dan earthy. Terlatih dalam triangle test dan QC protokol untuk menjamin konsistensi kualitas biji kopi dari green bean hingga cup.</div>
-        <div class="sensory-tags">
-          <span class="sensory-tag">Floral</span><span class="sensory-tag">Citrus</span><span class="sensory-tag">Chocolate</span>
-          <span class="sensory-tag">Nutty</span><span class="sensory-tag">Fruity</span><span class="sensory-tag">Earthy</span>
-          <span class="sensory-tag">Caramel</span><span class="sensory-tag">Spicy</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="f-name">Kenneth Edbert · Coffee Professional</div>
+  <div class="f-name">
+    <h4 id="footer_tagline"></h4>
+  </div>
   <!-- Footer social -->
   <div style="display:flex;gap:12px;align-items:center;">
-    <a href="https://www.instagram.com/kennethedbert" target="_blank" title="Instagram" style="color:var(--gold);opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
+    <a id="foot_ig"href="" target="_blank" title="Instagram" style="color:var(--gold);opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
     </a>
-    <a href="https://www.tiktok.com/@kennethedbert" target="_blank" title="TikTok" style="color:var(--fog);opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
+    <a id="foot_tktk" href="" target="_blank" title="TikTok" style="color:var(--fog);opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.82a8.18 8.18 0 0 0 4.78 1.52V6.88a4.85 4.85 0 0 1-1.01-.19z"/></svg>
     </a>
-    <a href="https://linkedin.com/in/kennethedbert" target="_blank" title="LinkedIn" style="color:var(--light-olive);opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
+    <a id="foot_linkedin" href="" target="_blank" title="LinkedIn" style="color:var(--light-olive);opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
     </a>
-    <a href="https://lynk.id/kennethedbert" target="_blank" title="Lynk.id" style="color:var(--light-gold);opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-    </a>
+    
   </div>
-  <div class="f-copy">© 2025 · Built with passion for coffee</div>
+  <div class="f-copy"></div>
 </footer>
-
+<div id="certModal" class="modal-overlay" onclick="closeImage()">
+  <span class="close-modal">&times;</span>
+  <img class="modal-content" id="imgFull">
+</div>
 <script>
   // ── Page Navigation ──
   function showPage(id, btn) {
@@ -890,16 +164,7 @@
     if (id === 'skills') setTimeout(animateBars, 300);
   }
 
-  // ── Cert expand/collapse ──
-  function toggleCert(card) {
-    const desc = card.querySelector('.cert-desc');
-    const toggle = card.querySelector('.cert-toggle');
-    const isOpen = desc.classList.contains('open');
-    desc.classList.toggle('open', !isOpen);
-    toggle.textContent = isOpen ? '▼ Lihat detail' : '▲ Tutup';
-    card.style.borderColor = isOpen ? 'rgba(214,201,184,0.5)' : 'rgba(200,144,60,0.45)';
-  }
-
+  
   // ── Coffee Bean SVG helper ──
   function beanSVG(filled) {
     const c = filled ? '#C8903C' : '#D6C9B8';
@@ -923,18 +188,14 @@
     }
   });
 
-  // ── Animate soft skill bars ──
-  function animateBars() {
-    document.querySelectorAll('.bar-fill').forEach(bar => {
-      bar.style.width = bar.dataset.width + '%';
-    });
-  }
-
   // ── Init ──
   window.addEventListener('load', () => {
     // Trigger bars if skills page is first (not default, just in case)
     if (document.getElementById('page-skills').classList.contains('active')) animateBars();
   });
+  
 </script>
+<script src="data.js"></script>
+<script src="logic.js"></script>
 </body>
 </html>
