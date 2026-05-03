@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title id="judul-website"></title>
+<title id="title-website"></title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-</head>
-<style type="text/css" media="all">
+<style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --espresso: #1E0F05;
@@ -63,32 +61,113 @@
     background: rgba(200,144,60,0.12);
     border-color: rgba(200,144,60,0.5);
   }
+  /* Main Container */
+.nav-dropdown-custom {
+  position: relative;
+  width: 220px;
+  font-family: 'DM Sans', sans-serif;
+  user-select: none;
+}
+
+/* Clicked main box */
+.dropdown-selected {
+  background: rgba(30, 15, 5, 0.7);
+  color: var(--cream);
+  border: 1px solid rgba(200, 144, 60, 0.4);
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  backdrop-filter: blur(10px);
+}
+
+.dropdown-selected:hover {
+  border-color: var(--gold);
+}
+
+.arrow-icon::after {
+  content: '';
+  border: solid var(--gold);
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  transition: transform 0.3s;
+}
+
+.nav-dropdown-custom.active .arrow-icon::after {
+  transform: rotate(-135deg);
+}
+
+/* Menu List*/
+.dropdown-options {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: rgba(44, 26, 14, 0.95); 
+  border: 1px solid rgba(200, 144, 60, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  display: none; 
+  z-index: 1000;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  backdrop-filter: blur(15px);
+}
+
+.nav-dropdown-custom.active .dropdown-options {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+/* Ops */
+.option {
+  padding: 12px 16px;
+  color: var(--fog);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 1px solid rgba(200, 144, 60, 0.1);
+}
+
+.option:last-child { border-bottom: none; }
+
+.option:hover {
+  background: rgba(200, 144, 60, 0.2);
+  color: var(--light-gold);
+  padding-left: 20px;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
   .nav-btn-id { font-family: 'Playfair Display', serif; color: var(--fog); font-size: 13px; display: block; transition: color 0.3s; }
   .nav-btn.active .nav-btn-id { color: var(--gold); }
   .nav-btn-en { font-family: 'DM Sans', sans-serif; color: rgba(214,201,184,0.5); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; display: block; transition: color 0.3s; }
   .nav-btn.active .nav-btn-en { color: var(--light-gold); }
 nav {
   display: flex;
-  align-items: center; /* Supaya semua rata tengah secara vertikal */
-  justify-content: space-between; /* Lempar brand ke kiri, tombol ke kanan */
+  align-items: center; 
+  justify-content: space-between; 
   padding: 10px 20px;
 }
 
-/* Mengatur Logo dan Tulisan agar berjejer ke samping */
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 12px; /* Jarak antara logo dan tulisan */
+  gap: 12px; 
 }
 
-/* Mengatur barisan teks agar menumpuk ke bawah (Title & Subtitle) */
 .nav-text-group {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
 }
 
-/* Reset margin default h1 dan h5 agar tidak berantakan */
 #nav_logo_text, #nav_logo_sub {
   margin: 0;
   padding: 0;
@@ -252,7 +331,6 @@ nav {
     margin-top: 10px;
 }
 
-/* Class saat kartu aktif (setelah diklik) */
 .cert-card.active .cert-desc, 
 .cert-card.active .cert-img-preview {
     display: block;
@@ -328,6 +406,7 @@ nav {
   }
 
 </style>
+</head>
 <body>
 <!-- ══ NAVIGATION ══ -->
 <nav>
@@ -343,24 +422,25 @@ nav {
     </div>
   </div>
 
-  <div class="nav-links">
-    <button class="nav-btn active" onclick="showPage('portfolio',this)">
-      <span class="nav-btn-id"><h3 id="nav_about"></h3></span>
-      <span class="nav-btn-en"><h5 id="nav_about2"></h5></span>
-    </button>
-    <button class="nav-btn" onclick="showPage('certifications',this)">
-      <span class="nav-btn-id"><h3 id="nav_sertifikat"></h3></span>
-      <span class="nav-btn-en"><h5 id="nav_sertifikat2"></h5></span>
-    </button>
-   
+<div class="nav-dropdown-custom" id="customDropdown">
+  <div class="dropdown-selected" onclick="toggleDropdown()">
+    <span id="selectedText">Work Experience</span>
+    <i class="arrow-icon"></i>
   </div>
+  <div class="dropdown-options" id="dropdownOptions">
+    <div class="option" onclick="selectOption('work', 'Work Experience')">Work Experience</div>
+    <div class="option" onclick="selectOption('education', 'Education')">Education</div>
+    <div class="option" onclick="selectOption('certification', 'Certification')">Certification</div>
+    <div class="option" onclick="selectOption('language', 'Language')">Language</div>
+    
+  </div>
+</div>
 </nav>
 
 <!-- ══════════════════════════════════════
-     PAGE 1 — PORTFOLIO
+     PAGE — Work Experience
 ══════════════════════════════════════ -->
-<div id="page-portfolio" class="page active">
-
+<div id="page-work" class="page active">
   <div class="hero" style="background: linear-gradient(135deg,#1E0F05 0%,#2C1A0E 50%,#4A2C17 100%);">
     <div class="hero-deco-circle" style="width:420px;height:420px;top:-100px;right:-100px;"></div>
     <div class="hero-deco-circle" style="width:280px;height:280px;top:-40px;right:-40px;border-color:rgba(200,144,60,0.22);"></div>
@@ -375,48 +455,37 @@ nav {
     </div>
 
     <div style="position:relative; max-width:820px;">
-      <div class="hero-label">Work Portfolio</div>
-      <h1 id="main_judul">
+      <div class="hero-label"><h5 id="work_title_description"></h5></div>
+      <h1 id="work_title">
       </h1>
-      <p id="main_deskripsi"></p>
+      <p id="work_description"></p>
 
-      <!-- Social media in hero -->
+
+<!-- Social media in hero -->
       <div class="social-bar" style="justify-content:flex-start; margin-top:32px;">
-        <a id='link_ig' href="" target="_blank" class="social-btn social-instagram">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> <h3 id="nama_ig"></h3>
+        <a href="https://www.linkedin.com/in/kenneth-tan-%E9%99%B3%E9%87%91%E5%8B%87-b32785404?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="social-btn social-linkedin">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> <h3 >陳金勇 Kennard Tan</h3>
         </a>
-        <a id="link_tktk" href="" target="_blank" class="social-btn social-tiktok">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.82a8.18 8.18 0 0 0 4.78 1.52V6.88a4.85 4.85 0 0 1-1.01-.19z"/></svg><h3 id="nama_tktk"></h3>
-          
-        </a>
-        <a id="link_linkedin" href="" target="_blank" class="social-btn social-linkedin">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> <h3 id="nama_linkedin"></h3>
-          
-        </a>
-        
       </div>
     </div>
   </div>
 
-  <!-- EXPERIENCE -->
+  <!-- Work History -->
   <div class="section" style="padding-top:20px;">
     <div class="section-title">
-      <h2 id="judul_work_experience"></h2>
+      <h2 id="title_work_experience"></h2>
       <span>
-        <h3 id="judul_work_experience2"></h3>
+        <h3 id="title_work_experience2"></h3>
       </span>
     </div>
-
-    <div id="experience-container">
-</div>
+    <div id="experience-container"></div>
   </div>
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE 2 — CERTIFICATIONS AND SKILLS ETC
+     PAGE — CERTIFICATIONS
 ══════════════════════════════════════ -->
-<div id="page-certifications" class="page">
-
+<div id="page-certification" class="page">
   <div class="hero" style="background:linear-gradient(160deg,#2C1A0E 0%,#4D5E35 100%);">
     <div style="position:absolute;top:60px;right:60px;opacity:0.07;pointer-events:none;">
       <svg width="280" height="280" viewBox="0 0 100 100" fill="none">
@@ -429,24 +498,100 @@ nav {
         <line x1="82" y1="18" x2="18" y2="82" stroke="white" stroke-width="0.3"/>
       </svg>
     </div>
+    
     <div style="position:relative;max-width:820px;">
       <div class="hero-label">
-        <h5 id="hero_label"></h5>
+        <h5 id="cert_title_description"></h5>
       </div>
-      <h1 id="judul_2"></h1>
-      <p id="sec_description"></p>
-      
+      <h1 id="cert_title"></h1>
+      <p id="cert_description"></p>
     </div>
   </div>
 
-  <div class="section">
-    <div id="sertifikasi-container"></div>
-    <div id="pelatihan-container"></div>
+  <div class="section" style="padding-top:20px;">
+    <div class="section-title">
+      <h2 id="title_cert">Certifications</h2>
+      <span>
+        <h3 id="title_cert_subtitle">Professional Verifications</h3>
+      </span>
+    </div>
+    <div id="cert-container"></div>
+  </div>
+  
+</div>
+<!-- ══════════════════════════════════════
+     PAGE — LANGUAGE
+══════════════════════════════════════ -->
+<div id="page-language" class="page">
+  <div class="hero" style="background:linear-gradient(160deg,#2C1A0E 0%,#7B4A2D 100%);">
+    <div style="position:absolute;top:60px;right:60px;opacity:0.07;pointer-events:none;">
+      <svg width="280" height="280" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="white" stroke-width="0.5" />
+        <circle cx="50" cy="50" r="34" stroke="white" stroke-width="0.5" />
+        <circle cx="50" cy="50" r="22" stroke="white" stroke-width="0.5" />
+        <line x1="4" y1="50" x2="96" y2="50" stroke="white" stroke-width="0.3" />
+        <line x1="50" y1="4" x2="50" y2="96" stroke="white" stroke-width="0.3" />
+        <line x1="18" y1="18" x2="82" y2="82" stroke="white" stroke-width="0.3" />
+        <line x1="82" y1="18" x2="18" y2="82" stroke="white" stroke-width="0.3" />
+      </svg>
+    </div>
+    
+    <div style="position:relative;max-width:820px;">
+      <div class="hero-label">
+        <h5 id="lang_title_description"></h5>
+      </div>
+      <h1 id="lang_title"></h1>
+      <p id="lang_description"></p>
+    </div>
+  </div>
+  
+  <div class="section" style="padding-top:20px;">
+    <div class="section-title">
+      <h2 id="title_lang">Language</h2>
+      <span>
+        <h3 id="title_lang_subtitle"></h3>
+      </span>
+    </div>
+    <div id="lang-container"></div>
   </div>
 </div>
-
-
-
+<!-- ══════════════════════════════════════
+     PAGE — EDUCATION
+══════════════════════════════════════ -->
+<div id="page-education" class="page">
+  
+  <div class="hero" style="background: linear-gradient(135deg, #4A2C17 0%, #2C1A0E 50%, #C8903C 100%);">
+    
+    <div style="position:absolute; top:40px; right:40px; opacity:0.1; pointer-events:none;">
+      <svg width="200" height="200" viewBox="0 0 100 100" fill="none">
+        <rect x="10" y="70" width="20" height="20" stroke="white" stroke-width="2" />
+        <rect x="40" y="40" width="20" height="50" stroke="white" stroke-width="2" />
+        <rect x="70" y="10" width="20" height="80" stroke="white" stroke-width="2" />
+        <path d="M10 70 L90 10" stroke="white" stroke-width="1" stroke-dasharray="4 4" />
+      </svg>
+    </div>
+    
+    <div style="position:relative; max-width:820px;">
+      <div class="hero-label">
+        <h5 id="edu_title_description"></h5>
+      </div>
+      <h1 id="edu_title"></h1>
+      <p id="edu_description"></p>
+    </div>
+  </div>
+  
+  <!-- EDUCATION SECTION -->
+  <div class="section" style="padding-top:20px;">
+    <div class="section-title">
+      <h2 id="title_education">Education</h2>
+      <span>
+        <h3 id="title_education_subtitle">Academic Background</h3>
+      </span>
+    </div>
+  
+    <div id="education-container"></div>
+</div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -455,23 +600,13 @@ nav {
   </div>
   <!-- Footer social -->
   <div style="display:flex;gap:12px;align-items:center;">
-    <a id="foot_ig"href="" target="_blank" title="Instagram" style="color:var(--gold);opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a id="foot_tktk" href="" target="_blank" title="TikTok" style="color:var(--fog);opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.82a8.18 8.18 0 0 0 4.78 1.52V6.88a4.85 4.85 0 0 1-1.01-.19z"/></svg>
-    </a>
-    <a id="foot_linkedin" href="" target="_blank" title="LinkedIn" style="color:var(--light-olive);opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
+    <a href="https://www.linkedin.com/in/kenneth-tan-%E9%99%B3%E9%87%91%E5%8B%87-b32785404?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" title="LinkedIn" style="color:var(--light-olive);opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
     </a>
-    
   </div>
   <div class="f-copy"></div>
 </footer>
-<div id="certModal" class="modal-overlay" onclick="closeImage()">
-  <span class="close-modal">&times;</span>
-  <img class="modal-content" id="imgFull">
-</div>
+
 <script>
   // ── Page Navigation ──
   function showPage(id, btn) {
@@ -515,361 +650,291 @@ nav {
   
 </script>
 <script>
-  /**
- * ============================================================
- *  DATA.JS — Isi Konten Website 
- * ============================================================
- *  File ini berisi SEMUA teks dan foto yang tampil di website.
- *
- *
- *  📌 CARA PAKAI FOTO:
- *     Ada 2 cara menambahkan foto:
- *
- *     1. Upload foto ke folder /images/ di GitHub, lalu tulis:
- *        photo: "images/nama-foto.jpg"
- *
- *     2. Pakai link foto dari internet (Google Drive, Imgur, dll):
- *        photo: "https://link-foto-kamu.jpg"
- *        ⚠️ Pastikan link foto bisa dibuka tanpa login
- *
- *  ⚠️  JANGAN hapus tanda { } [ ] , : atau tanda baca lainnya.
- *       Hanya ubah nilai di dalam tanda kutip " ".
- * ============================================================
- */
-const judul_website = "Kenneth Edbert · Coffee Professional";
-//Navigatio
-const nav_logo_text = "kennethedbert";
-const nav_logo_sub = "Coffee Professional";
-const logoUrl= "";// Isi dengan "https://github.com/.../logo.png" jika ada, kosongkan jika ingin pakai SVG
+const title_website = "Kenneth Tan · Coffee Roaster";
+//Navigation
+const nav_logo_text = "Kenneth Tan";
+const nav_logo_sub = "Coffee Roaster";
 
+// PAGE - Work --------------------------------------------
+const work_title_description = 'Professional Path';
+const work_title = 'Work Experience';
+const work_description = 'Professional career track record and tangible contributions to business operations.';
 
-const nav_about = "About Me";
-const nav_about2= "Work Proto";
-const nav_sertifikat = 'Sertif';
-const nav_sertifikat2= 'sertifikat';
-const nav_kerja = "Experience";
-const nav_kerja2= "Exp";
-
-//----------------------------------------------------------
-
-//
-const main_judul ='Kennard Edbert';
-const main_deskripsi = 'Lebih dari 4 tahun di industri kopi spesialti — dari belakang bar hingga konsultasi kafe. Setiap cangkir adalah pernyataan kualitas.';
-const sosmed = {
-    instagram: {
-      url:"https://www.instagram.com/kennethedbert",
-      nama_sosmed: "@kennethedbert"
-    },
-    tiktok: {
-      url:    "https://www.tiktok.com/kennethedbert",
-      nama_sosmed: "kennethedbert"
-    },
-    linkedin: {
-      url:    "https://linkedin.com/in/kennethedbert",
-      nama_sosmed: "kennethedbert"
-    }
-  }
-  
-  
-// work experience --------------------------------------------
-  const judul_work_experience = 'Riwayat Pengalaman';
-  const judul_work_experience2= 'Work Experience';
-
-// pengalaman pekerjaan
-const pengalamanKerja = [
-  {
-  cafe: "Anomali Coffee",
-  posisi: "Head Barista",
-  lokasi: "Jakarta Selatan",
-  periode: "2022 – Sekarang",
-  deskripsi: "Memimpin operasional bar harian, menjaga konsistensi rasa & standar kualitas, serta membimbing tim barista junior.",
-  warna: "#C8903C",
-  // Tambahkan baris ini. Ganti dengan URL GitHub kamu!
-  // Contoh untuk demo (jangan hapus 'raw.' kalau pakai link GitHub!):
-  fotoUrl: "https://share.google/qSYjxDSRTtwybmcGV",
-  chips: [
-    "↑ Penjualan signature beverage +30% Q1 2023",
-    "12 resep baru menu seasonal",
-    "Melatih 5 barista junior"
-  ]
-},{
-cafe: "Anomali Coffee",
-  posisi: "Head Barista",
-  lokasi: "Jakarta Selatan",
-  periode: "2022 – Sekarang",
-  deskripsi: "Memimpin operasional bar harian, menjaga konsistensi rasa & standar kualitas, serta membimbing tim barista junior.",
-  warna: "#C8903C",
-  // Tambahkan baris ini. Ganti dengan URL GitHub kamu!
-  // Contoh untuk demo (jangan hapus 'raw.' kalau pakai link GitHub!):
-  fotoUrl: "https://raw.githubusercontent.com/kennard_barista/assets/main/photos/anomali_work_shot.jpg",
-  chips: [
-    "↑ Penjualan signature beverage +30% Q1 2023",
-    "12 resep baru menu seasonal",
-    "Melatih 5 barista junior"
-  ]
+const title_work_experience = 'Work Experience';
+const title_work_experience2 = 'Kenneth Tan';
+const workExperience = [
+{
+perusahaan: "Arch official",
+posisi: "Business Owner",
+lokasi: "Bandung, West Java (On-site)",
+periode: "Jun 2024 - Mar 2025",
+description: "Building a clothing line for the final school project (LSP) at SMAK 1 BPK Penabur. Gaining deep business insights and implementing creativity in fashion products.",
+warna: "#1E0F05",
+chips: [
+"Social Media",
+"Creativity & Innovation",
+"Final School Project"
+]
+},
+{
+perusahaan: "Student Council",
+posisi: "Soscial Media Specialist",
+lokasi: "SMAK 1 BPK PENABUR, Bandung (On-site)",
+periode: "Sep 2022 - Sep 2023",
+description: "I was given the responsibility to handle the school's tiktok social media, as well as to handle several events during my time.",
+chips: [
+"Social Media",
+"Creativity & Innovation",
+"Leadership"
+]
 }
 ];
-// page 2 -------------------------------------------------------------
-const hero_label = 'Certifications && Credentials';
-const judul_2 = 'standar yang terfalidasi';
-const sec_description = 'Setiap sertifikat adalah bukti komitmen terhadap standar tertinggi dalam industri kopi dan F&B profesional.' ;
 
-const dataSertifikasi = [
-  {
-    categoryName: "SCA – Specialty Coffee Association",
-    icon: "🏅",
-    themeColor: "#C8903C",
-    items: [
-      {
-        org: "SCA Authorized",
-        year: "2021",
-        name: "Barista Skills – Foundation",
-        grade: "Pass with Distinction",
-        desc: "Penguasaan dasar teknik espresso, steam milk, dan konsistensi resep standar SCA.",
-certImg: "https://link-ke-gambar-sertifikat.jpg"
-      },
-      {
-        org: "SCA Authorized",
-        year: "2022",
-        name: "Barista Skills – Intermediate",
-        grade: "Pass",
-        desc: "Kalibrasi lanjutan, water chemistry, dan analisis sensori espresso tingkat menengah.",
-certImg: "https://link-ke-gambar-sertifikat.jpg"
-      }
-    ]
-  },
-  {
-    categoryName: "BNSP – Kompetensi Nasional",
-    icon: "🇮🇩",
-    themeColor: "#6B7F4A",
-    items: [
-      {
-        org: "BNSP / LSP F&B",
-        year: "2021",
-        name: "Kompetensi Barista Nasional",
-        grade: "Kompeten",
-        desc: "Sertifikasi kompetensi barista resmi Pemerintah Indonesia.",
-certImg: "https://link-ke-gambar-sertifikat.jpg"
-      }
-    ]
-  }
-];
+// PAGE - Certification ------------------------------
+const cert_title_description = 'Expertise & Skills';
+const cert_title = 'Certifications';
+const cert_description = 'Professional validation and technical competencies that prove quality and work standards.';
 
-// Kelompok 2: Pelatihan & Kelas Spesialis
-const dataPelatihan = [
-  {
-    categoryName: "Pelatihan & Kelas Spesialis",
-    icon: "📋",
-    themeColor: "#7B4A2D",
-    items: [
-      {
-        org: "BPOM Training Center",
-        year: "2020",
-        name: "Food Safety & Hygiene",
-        grade: "Lulus",
-        desc: "Standar higienitas pangan, penanganan bahan baku, dan sanitasi area kerja F&B.",
-        certImg: "https://link-ke-gambar-sertifikat.jpg"
-      },
-      {
-        org: "Specialty Coffee Indonesia",
-        year: "2023",
-        name: "Basic Coffee Roasting Class",
-        grade: "Lulus",
-        desc: "Memahami kurva roasting, Maillard reaction, dan analisis green bean.",
-        certImg: "https://link-ke-gambar-sertifikat.jpg" 
-      }
-    ]
-  }
-];
+const dataSertifikat = [
 
-
-
-//footer   -------------------------------------
-const footer_tagline = "Kenneth Edbert · Coffee Professional";
-</script>
-<script >
-  document.getElementById("judul-website").innerText = judul_website;
-const navLogo = document.getElementById("nav_logo")
-const defaultSvg = `
-    <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
-      <rect x="14" y="8" width="12" height="8" rx="2" stroke="#C8903C" stroke-width="1.5"/>
-      <path d="M12 16 Q8 20 8 26 Q8 32 20 32 Q32 32 32 26 Q32 20 28 16" stroke="#C8903C" stroke-width="1.5" fill="none"/>
-      <line x1="20" y1="8" x2="20" y2="4" stroke="#C8903C" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="15" y1="32" x2="13" y2="37" stroke="#C8903C" stroke-width="1.5" stroke-linecap="round"/>
-      <line x1="25" y1="32" x2="27" y2="37" stroke="#C8903C" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>`;
-
-if (logoUrl && logoUrl !== "") {
-  navLogo.innerHTML = `<img src="${navbarData.logoUrl}" alt="Logo" style="width:26px; height:26px; object-fit:contain;">`;
-} else {
-  navLogo.innerHTML = defaultSvg;
+{
+nama: "SCA CVA For Cuppers",
+penerbit: "Specialty Coffee Association",
+tanggal: "Jul 2025",
+credentialId: "777263",
+warna: "#A29061",
+skills: ["Coffee Cup", "Sensory Analysis"],
+linkCert: "#"
 }
+];
+// PAGE - Language ------------------------------
+const lang_title_description = 'Language Capabilities';
+const lang_title = 'Language';
+const lang_description = 'Confidently fluent — able to communicate with clarity and ease.';
+
+const dataLanguage = [
+{
+nama: "TOCFL Language Proficiency",
+penerbit: "Ministry of Education, ROC (Taiwan)",
+tanggal: "Nov 2024",
+warna: "#2D5EAD",
+skills: ["Chinese Language", "Mandarin Proficiency"],
+linkCert: "#"
+},
+{
+nama: "IELTS Language Proficiency",
+penerbit: "IELTS Official",
+tanggal: "2024",
+credentialId: "24ID501052T406A",
+warna: "#E3182D",
+skills: ["Communication", "Business English", "B2 Level"],
+linkCert: "#"
+},];
+
+
+// PAGE Education
+const edu_title_description = 'Academic Journey';
+const edu_title = 'Education Background';
+const edu_description = 'Educational background and formal learning history that shape an analytical mindset.';
+const dataPendidikan = [
+{
+institusi: "Tunghai University",
+gelar: "BACHELOR'S DEGREE",
+jurusan: "Food Science and Technology",
+periode: "Sep 2025 - Jun 2029",
+warna: "#C8903C", // Warna Gold/Coffee
+description: "Focusing on food technology, food safety, and industrial product processing."
+},
+{
+institusi: "SMAK 1 BPK PENABUR Bandung",
+gelar: "Student",
+jurusan: "Physics",
+periode: "Jun 2022 - Jun 2025",
+warna: "#4A2C17", // Warna Dark Coffee
+description: "Learning the basics of science, calculus, and participating in school entrepreneurship projects."
+}
+];
+
+
+
+//footer -------------------------------------
+const footer_tagline = "Kenneth Tan · Coffee Professional";</script>
+<script>document.getElementById("title-website").innerText = title_website;
+
 //navigasi
 document.getElementById("nav_logo_text").innerText = nav_logo_text;
 document.getElementById("nav_logo_sub").innerText = nav_logo_sub;
-
-document.getElementById("nav_about").innerText = nav_about;
-document.getElementById("nav_about2").innerText = nav_about2;
-
-document.getElementById("nav_sertifikat").innerText = nav_sertifikat;
-document.getElementById("nav_sertifikat2").innerText = nav_sertifikat2;
-
-
-
-//----------------------------------
-document.getElementById("main_judul").innerText = main_judul;
-document.getElementById("main_deskripsi").innerText = main_deskripsi;
-
-const igElement = document.getElementById("link_ig");
-const igElement2= document.getElementById("foot_ig");
-const tiktokElement = document.getElementById("link_tktk");
-const tiktokElement2= document.getElementById("foot_tktk")
-const linkedinElement = document.getElementById("link_linkedin");
-const linkedinElement2= document.getElementById("foot_linkedin");
-
-igElement.href = sosmed.instagram.url;
-igElement2.href = sosmed.instagram.url;
-document.getElementById("nama_ig").innerText = sosmed.instagram.nama_sosmed;
-
-tiktokElement.href = sosmed.tiktok.url;
-tiktokElement2.href = sosmed.tiktok.url;
-
-document.getElementById("nama_tktk").innerText = sosmed.tiktok.nama_sosmed;
-
-linkedinElement.href = sosmed.linkedin.url;
-linkedinElement2.href = sosmed.linkedin.url;
-document.getElementById("nama_linkedin").innerText = sosmed.linkedin.nama_sosmed;
-
-
-// work experience
-document.getElementById("judul_work_experience").innerText = judul_work_experience;
-document.getElementById("judul_work_experience2").innerText = nav_logo_text;
-const container = document.getElementById("experience-container");
-
-pengalamanKerja.forEach((exp) => {
-  const chipsHTML = exp.chips.map(chip => `<span class="exp-chip">${chip}</span>`).join("");
-  
-  const cardHTML = `
-    <div class="exp-card">
-      <div class="exp-stripe" style="background:${exp.warna};"></div>
-      <div class="exp-body">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title-row">
-              <span class="exp-cafe">${exp.cafe}</span>
-              <span class="exp-badge" style="background:${exp.warna}26; border:1px solid ${exp.warna}73; color:${exp.warna};">
-                ${exp.posisi}
-              </span>
-            </div>
-            <div class="exp-location">📍 ${exp.lokasi}</div>
-          </div>
-          <div class="exp-period">${exp.periode}</div>
-        </div>
-        <p class="exp-desc">${exp.deskripsi}</p>
-        <div class="exp-chips">
-          ${chipsHTML}
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // 3. Masukkan ke dalam container
-  container.innerHTML += cardHTML;
-});
-
-
-
-// page 2 ---------------------
-document.getElementById("hero_label").innerText = judul_2;
-
-document.getElementById("judul_2").innerText = judul_2;
-
-document.getElementById("sec_description").innerText = sec_description;
-
-function renderCategories(dataArray, targetId) {
-  const container = document.getElementById(targetId);
-  let htmlContent = "";
-  
-  dataArray.forEach(cat => {
-    const cardsHTML = cat.items.map(item => `
-      <div class="cert-card" onclick="toggleCert(this)">
-        <div class="cert-card-top" style="background:linear-gradient(135deg,${cat.themeColor}26,${cat.themeColor}0A); border-bottom:1px solid ${cat.themeColor}2E;">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-            <div class="cert-org" style="color:${cat.themeColor};">${item.org}</div>
-            <span class="cert-year">${item.year}</span>
-          </div>
-          <div class="cert-name">${item.name}</div>
-        </div>
-        <div class="cert-card-body">
-          <div class="cert-grade-badge" style="background:${cat.themeColor}1F; border:1px solid ${cat.themeColor}59;">
-            <div class="cert-grade-dot" style="background:${cat.themeColor};"></div>
-            <span class="cert-grade-text" style="color:${cat.themeColor};">${item.grade}</span>
-          </div>
-          
-          <div class="cert-desc">${item.desc}</div>
-          
-          ${item.certImg ? `<img src="${item.certImg}" class="cert-img-preview" onclick="openImage(event, '${item.certImg}')">` : ''}
-          
-          <div class="cert-toggle" style="color:${cat.themeColor}; margin-top:10px;">
-             <span class="toggle-text">▼ Lihat detail</span>
-          </div>
-        </div>
-      </div>
-    `).join("");
-    
-    htmlContent += `
-      <div class="cert-category">
-        <div class="cert-cat-header">
-          <div class="cert-cat-icon" style="background:${cat.themeColor}26; border:1.5px solid ${cat.themeColor}66;">${cat.icon}</div>
-          <div>
-            <div class="cert-cat-name">${cat.categoryName}</div>
-            <div class="cert-cat-line" style="background:${cat.themeColor};"></div>
-          </div>
-        </div>
-        <div class="cert-grid">${cardsHTML}</div>
-      </div>
-    `;
-  });
-  
-  container.innerHTML = htmlContent;
+function toggleDropdown() {
+  document.getElementById('customDropdown').classList.toggle('active');
 }
 
-// 1. Fungsi Toggle Detail
-function toggleCert(card) {
-  // Tutup kartu lain yang sedang terbuka (Opsional)
-  // document.querySelectorAll('.cert-card').forEach(c => { if(c !== card) c.classList.remove('active') });
-  
-  card.classList.toggle('active');
-  const toggleText = card.querySelector('.toggle-text');
-  
-  if (card.classList.contains('active')) {
-    toggleText.innerText = "▲ Tutup detail";
-  } else {
-    toggleText.innerText = "▼ Lihat detail";
+function selectOption(value, text) {
+  document.getElementById('selectedText').innerText = text;
+  document.getElementById('customDropdown').classList.remove('active');
+  if (typeof showPage === "function") {
+    showPage(value, null);
   }
 }
-
-// 2. Fungsi Zoom Gambar
-function openImage(event, src) {
-  event.stopPropagation(); // Agar fungsi toggleCert tidak ikut jalan saat gambar diklik
-  const modal = document.getElementById("certModal");
-  const modalImg = document.getElementById("imgFull");
-  modal.style.display = "flex";
-  modalImg.src = src;
+window.onclick = function(event) {
+  if (!event.target.closest('#customDropdown')) {
+    document.getElementById('customDropdown').classList.remove('active');
+  }
 }
+//work Page
+document.getElementById("work_title_description").innerText = work_title_description;
+document.getElementById("work_title").innerText = work_title;
+document.getElementById("work_description").innerText = work_description;
 
-// 3. Fungsi Tutup Modal
-function closeImage() {
-  document.getElementById("certModal").style.display = "none";
+function renderWorkExperience(data, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  
+  container.innerHTML = data.map(exp => {
+    const chipsHTML = exp.chips ?
+      exp.chips.map(chip => `<span class="exp-chip">${chip}</span>`).join("") :
+      "";
+    
+    return `
+      <div class="exp-card">
+        <div class="exp-stripe" style="background:${exp.warna || '#4A2C17'};"></div>
+        <div class="exp-body">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title-row">
+                <span class="exp-cafe">${exp.perusahaan || exp.cafe}</span>
+                <span class="exp-badge" style="background:${exp.warna}26; border:1px solid ${exp.warna}73; color:${exp.warna};">
+                  ${exp.posisi}
+                </span>
+              </div>
+              ${exp.lokasi ? `<div class="exp-location">📍 ${exp.lokasi}</div>` : ""}
+            </div>
+            <div class="exp-period">${exp.periode || ""}</div>
+          </div>
+          ${exp.description ? `<p class="exp-desc">${exp.description}</p>` : ""}
+          <div class="exp-chips">
+            ${chipsHTML}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
 }
+renderWorkExperience(workExperience, "experience-container");
 
-// Jalankan Render
-renderCategories(dataSertifikasi, "sertifikasi-container");
-renderCategories(dataPelatihan, "pelatihan-container");
+document.getElementById("title_work_experience").innerText = title_work_experience;
+document.getElementById("title_work_experience2").innerText = title_work_experience2;
 
 
+// Certification Page ---------------------
+document.getElementById("cert_title_description").innerText = cert_title_description;
 
-document.getElementById("footer_tagline").innerText = footer_tagline;
+document.getElementById("cert_title").innerText = cert_title;
+
+document.getElementById("cert_description").innerText = cert_description;
+function renderCertifications(data, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  
+  container.style.display = "grid";
+  container.style.gridTemplateColumns = "repeat(auto-fill, minmax(300px, 1fr))";
+  container.style.gap = "20px";
+  container.style.alignItems = "start"; 
+  container.innerHTML = data.map(cert => {
+    const chipsHTML = cert.skills ?
+      cert.skills.map(s => `<span class="exp-chip" style="display:inline-block; margin:2px;">${s}</span>`).join("") :
+      "";
+    
+    return `
+      <div class="exp-card" style="margin: 0; height: 100%; display: flex; flex-direction: column;">
+        <div class="exp-stripe" style="background:${cert.warna || '#4A2C17'};"></div>
+        <div class="exp-body" style="flex-grow: 1; display: flex; flex-direction: column;">
+          <div class="exp-header" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              ${cert.logo ? `<img src="${cert.logo}" style="width:40px; height:40px; object-fit:contain;">` : "📜"}
+              <div>
+                <div class="exp-title-row">
+                  <span class="exp-cafe" style="font-size: 1.1rem; line-height: 1.2;">${cert.nama}</span>
+                </div>
+                <div class="exp-location" style="font-size: 0.9rem; opacity: 0.8;">${cert.penerbit}</div>
+              </div>
+            </div>
+            <div class="exp-period" style="font-size: 0.8rem; font-weight: bold;">Issued ${cert.tanggal}</div>
+          </div>
+          
+          <div style="margin-top: 15px; flex-grow: 1;">
+            ${cert.credentialId ? `<p class="exp-desc" style="font-size: 0.8rem; margin-bottom: 8px; opacity: 0.7;">ID: ${cert.credentialId}</p>` : ""}
+            <div class="exp-chips">
+              ${chipsHTML}
+            </div>
+          </div>
+
+          ${cert.linkCert ? `
+            <a href="${cert.linkCert}" target="_blank" style="
+              margin-top: 15px;
+              padding: 8px 12px;
+              background: #f8f9fa;
+              border: 1px solid #ddd;
+              border-radius: 6px;
+              text-decoration: none;
+              color: #333;
+              font-size: 0.85rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              transition: background 0.2s;
+            ">
+              <span>🖼️</span> View Certificate
+            </a>
+          ` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+renderCertifications(dataSertifikat, "cert-container");
+
+// Language Page ---------------------
+document.getElementById("lang_title_description").innerText = lang_title_description;
+
+document.getElementById("lang_title").innerText = lang_title;
+
+document.getElementById("lang_description").innerText = lang_description;
+renderCertifications(dataLanguage, "lang-container");
+
+
+// PAGE Education
+document.getElementById("edu_title_description").innerText = edu_title_description;
+document.getElementById("edu_title").innerText = edu_title;
+document.getElementById("edu_description").innerText = edu_description;
+function renderEducation(data, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  
+  container.innerHTML = data.map(edu => {
+    return `
+      <div class="exp-card">
+        <div class="exp-stripe" style="background:${edu.warna || '#4A2C17'};"></div>
+        <div class="exp-body">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title-row">
+                <span class="exp-cafe">${edu.institusi}</span>
+                <span class="exp-badge" style="background:${edu.warna}26; border:1px solid ${edu.warna}73; color:${edu.warna};">
+                  ${edu.gelar || 'Student'}
+                </span>
+              </div>
+              <div class="exp-location">🎓 ${edu.jurusan}</div>
+            </div>
+            <div class="exp-period">${edu.periode}</div>
+          </div>
+          ${edu.description ? `<p class="exp-desc">${edu.description}</p>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+renderEducation(dataPendidikan, "education-container");
 
 </script>
 </body>
