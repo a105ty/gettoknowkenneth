@@ -606,7 +606,49 @@ nav {
   </div>
   <div class="f-copy"></div>
 </footer>
-
+<!-- Modal Container -->
+<div id="certModal" style="
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0; 
+  top: 0; 
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.7);
+  align-items: center; 
+  justify-content: center;
+">
+  <div style="
+    position: relative; 
+    width: 80%; 
+    max-width: 900px; 
+    height: 85vh; 
+    background: white; 
+    border-radius: 8px; 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  ">
+    <!-- Tombol Close -->
+    <button onclick="closeCertModal()" style="
+      position: absolute; 
+      top: 10px; 
+      right: 15px; 
+      background: #E3182D; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      padding: 5px 10px; 
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 1001;
+    ">X Close</button>
+    
+    <!-- Tempat Menampilkan PDF -->
+    <iframe id="certFrame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+  </div>
+</div>
 <script>
   // ── Page Navigation ──
   function showPage(id, btn) {
@@ -783,7 +825,7 @@ tanggal: "Jul 2025",
 credentialId: "777263",
 warna: "#A29061",
 skills: ["Coffee Cup", "Sensory Analysis"],
-linkCert: "#"
+linkCert: "./SCA%20CVA%20sertifikat%20(pass).pdf"
 }
 ];
 // PAGE - Language ------------------------------
@@ -798,7 +840,7 @@ penerbit: "Ministry of Education, ROC (Taiwan)",
 tanggal: "Nov 2024",
 warna: "#2D5EAD",
 skills: ["Chinese Language", "Mandarin Proficiency"],
-linkCert: "#"
+linkCert: "./Tocfl%20fix.pdf"
 },
 {
 nama: "IELTS Language Proficiency",
@@ -807,7 +849,7 @@ tanggal: "2024",
 credentialId: "24ID501052T406A",
 warna: "#E3182D",
 skills: ["Communication", "Business English", "B2 Level"],
-linkCert: "#"
+linkCert: "./Ielts%202.pdf"
 },];
 
 
@@ -917,7 +959,8 @@ function renderCertifications(data, containerId) {
   container.style.display = "grid";
   container.style.gridTemplateColumns = "repeat(auto-fill, minmax(300px, 1fr))";
   container.style.gap = "20px";
-  container.style.alignItems = "start"; 
+  container.style.alignItems = "start";
+  
   container.innerHTML = data.map(cert => {
     const chipsHTML = cert.skills ?
       cert.skills.map(s => `<span class="exp-chip" style="display:inline-block; margin:2px;">${s}</span>`).join("") :
@@ -948,13 +991,13 @@ function renderCertifications(data, containerId) {
           </div>
 
           ${cert.linkCert ? `
-            <a href="${cert.linkCert}" target="_blank" style="
+            <button onclick="openCertModal('${cert.linkCert}')" style="
               margin-top: 15px;
               padding: 8px 12px;
               background: #f8f9fa;
               border: 1px solid #ddd;
               border-radius: 6px;
-              text-decoration: none;
+              cursor: pointer;
               color: #333;
               font-size: 0.85rem;
               display: flex;
@@ -962,14 +1005,42 @@ function renderCertifications(data, containerId) {
               justify-content: center;
               gap: 8px;
               transition: background 0.2s;
+              width: 100%;
             ">
               <span>🖼️</span> View Certificate
-            </a>
+            </button>
           ` : ""}
         </div>
       </div>
     `;
   }).join("");
+}
+
+// --- FUNGSI UNTUK LOGIK MODAL ---
+function openCertModal(url) {
+  const modal = document.getElementById("certModal");
+  const iframe = document.getElementById("certFrame");
+  if (modal && iframe) {
+    iframe.src = url;
+    modal.style.display = "flex";
+  }
+}
+
+function closeCertModal() {
+  const modal = document.getElementById("certModal");
+  const iframe = document.getElementById("certFrame");
+  if (modal && iframe) {
+    modal.style.display = "none";
+    iframe.src = ""; // Clear src agar performa tetap ringan saat ditutup
+  }
+}
+
+// Menutup modal jika user klik area luar modal cerfitikat
+window.onclick = function(event) {
+  const modal = document.getElementById("certModal");
+  if (event.target === modal) {
+    closeCertModal();
+  }
 }
 renderCertifications(dataSertifikat, "cert-container");
 
@@ -1016,5 +1087,6 @@ function renderEducation(data, containerId) {
 renderEducation(dataPendidikan, "education-container");
 
 </script>
+
 </body>
 </html>
