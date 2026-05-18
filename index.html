@@ -606,7 +606,6 @@ nav {
   </div>
   <div class="f-copy"></div>
 </footer>
-<!-- Modal Container -->
 <div id="certModal" style="
   display: none; 
   position: fixed; 
@@ -621,16 +620,15 @@ nav {
 ">
   <div style="
     position: relative; 
-    width: 80%; 
+    width: 85%; 
     max-width: 900px; 
-    height: 85vh; 
+    height: 80vh; 
     background: white; 
     border-radius: 8px; 
     overflow: hidden;
     display: flex;
     flex-direction: column;
   ">
-    <!-- Tombol Close -->
     <button onclick="closeCertModal()" style="
       position: absolute; 
       top: 10px; 
@@ -639,14 +637,13 @@ nav {
       color: white; 
       border: none; 
       border-radius: 5px; 
-      padding: 5px 10px; 
+      padding: 6px 12px; 
       cursor: pointer;
       font-weight: bold;
       z-index: 1001;
     ">X Close</button>
     
-    <!-- Tempat Menampilkan PDF -->
-    <iframe id="certFrame" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+    <div id="modalBody" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;"></div>
   </div>
 </div>
 <script>
@@ -1016,26 +1013,32 @@ function renderCertifications(data, containerId) {
   }).join("");
 }
 
-// --- FUNGSI UNTUK LOGIK MODAL ---
 function openCertModal(url) {
   const modal = document.getElementById("certModal");
-  const iframe = document.getElementById("certFrame");
-  if (modal && iframe) {
-    iframe.src = url;
+  const modalBody = document.getElementById("modalBody");
+  
+  if (modal && modalBody) {
+    const isPdf = url.toLowerCase().endsWith('.pdf');
+    
+    if (isPdf) {
+      modalBody.innerHTML = `<iframe src="${url}" style="width: 100%; height: 100%; border: none;"></iframe>`;
+    } else {
+      modalBody.innerHTML = `<img src="${url}" style="max-width: 100%; max-height: 100%; object-fit: contain; padding: 20px;">`;
+    }
+    
     modal.style.display = "flex";
   }
 }
 
 function closeCertModal() {
   const modal = document.getElementById("certModal");
-  const iframe = document.getElementById("certFrame");
-  if (modal && iframe) {
+  const modalBody = document.getElementById("modalBody");
+  if (modal && modalBody) {
     modal.style.display = "none";
-    iframe.src = ""; // Clear src agar performa tetap ringan saat ditutup
+    modalBody.innerHTML = ""; // Bersihkan konten saat ditutup
   }
 }
 
-// Menutup modal jika user klik area luar modal cerfitikat
 window.onclick = function(event) {
   const modal = document.getElementById("certModal");
   if (event.target === modal) {
