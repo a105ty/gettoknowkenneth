@@ -984,12 +984,12 @@ function renderWorkExperience(data, containerId) {
     if (exp.images && exp.images.length > 0) {
       const imagesRender = exp.images.map(imgUrl => `
         <img src="${imgUrl}" style="
-          flex: 0 0 100%; /* Mengunci agar setiap gambar selebar 100% dari kontainer slider */
+          flex: 0 0 100%; 
           width: 100%; 
-          height: 250px; /* Disesuaikan sedikit agar lebih proporsional di mobile */
-          object-fit: cover; /* Ubah ke 'contain' jika ingin seluruh gambar terlihat tanpa di-crop */
+          aspect-ratio: 16 / 9; /* Kunci rasio gambar menjadi memanjang (landscape). Bisa diubah ke 4/3 atau 3/2 sesuai selera */
+          object-fit: cover; /* Memastikan gambar memenuhi bingkai rasio 16:9 dengan rapi */
           border-radius: 6px;
-          scroll-snap-align: start; /* Pastikan gambar berhenti tepat di bingkai saat di-scroll */
+          scroll-snap-align: start;
         " alt="Documentation">
       `).join("");
       
