@@ -429,6 +429,7 @@ nav {
   </div>
   <div class="dropdown-options" id="dropdownOptions">
     <div class="option" onclick="selectOption('work', 'Work Experience')">Work Experience</div>
+    <div class="option" onclick="selectOption('organization', 'Organization')">Organization</div>
     <div class="option" onclick="selectOption('education', 'Education')">Education</div>
     <div class="option" onclick="selectOption('certification', 'Certification')">Certification</div>
     <div class="option" onclick="selectOption('language', 'Language')">Language</div>
@@ -508,6 +509,43 @@ nav {
     <div id="experience-container"></div>
   </div>
 </div>
+<!-- ══════════════════════════════════════
+     PAGE — Organization
+══════════════════════════════════════ -->
+<div id="page-organization" class="page">
+  <div class="hero" style="background: linear-gradient(135deg,#1E0F05 0%,#2C1A0E 50%,#4A2C17 100%);">
+    <div class="hero-deco-circle" style="width:420px;height:420px;top:-100px;right:-100px;"></div>
+    <div class="hero-deco-circle" style="width:280px;height:280px;top:-40px;right:-40px;border-color:rgba(200,144,60,0.22);"></div>
+
+    <!-- steam svg -->
+    <div class="steam-wrap">
+      <svg width="60" height="52" viewBox="0 0 60 52" fill="none">
+        <path class="sp1" d="M15 44 Q10 32 15 20 Q20 9 15 4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="sp2" d="M30 44 Q25 30 30 18 Q35 7 30 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="sp3" d="M45 44 Q40 32 45 20 Q50 9 45 4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div style="position:relative; max-width:820px;">
+      <div class="hero-label"><h5 id="org_title_description"></h5></div>
+      <h1 id="org_title">
+      </h1>
+      <p id="org_description"></p>
+      </div>
+  </div>
+
+  <!-- Organization History -->
+  <div class="section" style="padding-top:20px;">
+    <div class="section-title">
+      <h2 id="title_org_experience"></h2>
+      <span>
+        <h3 id="title_org_experience2"></h3>
+      </span>
+    </div>
+    <div id="organization-container"></div>
+  </div>
+</div>
+
 
 <!-- ══════════════════════════════════════
      PAGE — CERTIFICATIONS
@@ -756,7 +794,8 @@ perusahaan: "Event demonstrator",
   posisi: "Freelance",
   lokasi: "Tunghai University",
   periode: "Mar 2026",
-  description: "Grateful for the opportunity to demonstrate roasting for @uphcollege 2026 ☕️📸",
+  description: "Grateful for the opportunity to demonstrate roasting for @uphcollege 2026 ☕️📸 <br><br>"
+  ,
   warna: "#1E0F05",
   chips: [
     "Coffee Roasting",
@@ -769,9 +808,8 @@ perusahaan: "Event demonstrator",
 {
 perusahaan: "Event Coordinator",
   posisi: "Part time",
-  lokasi: "Delta Coffe Roasters",
+  lokasi: "Jakarta International Expo (JIExpo)",
   periode: "Nov 2025",
-  description: "Grateful to have been a part of the team with @deltacoffee.id | at @interfoodexpo 25’☕️📸",
   warna: "#1E0F05",
   chips: [
     "Event Planning",
@@ -785,7 +823,7 @@ perusahaan: "Event Coordinator",
 {
   perusahaan: "Delta Coffee Roasters",
   posisi: "Part time",
-  lokasi: "Delta Coffe Roasters",
+  lokasi: "JIEXPO, Hall B3, booth 510, Jakarta ID",
   periode: "Jul 2025",
   description: "Grateful to be part of the team with @deltacoffee.id | at @foodhospitalityindonesia_fhi 25’ ",
   warna: "#1E0F05",
@@ -803,7 +841,7 @@ images: ["./IMG_20260518_191900.jpg","./IMG_20260518_191910.jpg"]
 {
   perusahaan: "Event Staff",
   posisi: "-",
-  lokasi: "Indonesia",
+  lokasi: "Jakarta International Convention Center (JICC), Jakarta",
   periode: "Jun 2025",
   description: "I am grateful to be part of a team with @deltacoffee.id | at @worldofcoffeeasia Jakarta’25",
   warna: "#1E0F05",
@@ -834,7 +872,7 @@ images: ["./IMG_20260518_192010.jpg","./IMG_20260518_192021.jpg"]
 {
   perusahaan: "Event Staff",
   posisi: "Part time",
-  lokasi: "Delta Coffe Roasters",
+  lokasi: "Jakarta International Expo (JIE), Jakarta",
   periode: "Nov 2024",
   description: "I am grateful to be part of the team with @deltacoffee.id | at @interfoodexpo 24’",
   warna: "#1E0F05",
@@ -848,22 +886,28 @@ images: ["./IMG_20260518_192010.jpg","./IMG_20260518_192021.jpg"]
     "Specialty Coffee"
   ],
 images: ["./IMG_20260518_192041.jpg","./IMG_20260518_192101.jpg"]
-},
-{
+}
+];
+
+// PAGE - Organization ----------------------------------------------
+const org_title_description = 'Collaborative Mile';
+const org_title = 'My Organization Experience';
+const org_description =  'Collaborative engagement and role-based responsibilities that demonstrate initiative, coordination, and collective achievement.';
+const title_org_experience = 'Organization Experience';
+const title_org_experience2 = 'Kenneth Tan';
+const orgData = [{
 perusahaan: "Student Council",
 posisi: "Soscial Media Specialist",
-lokasi: "SMAK 1 BPK PENABUR, Bandung (On-site)",
+lokasi: "SMAK 1 BPK PENABUR, Bandung",
 periode: "Sep 2022 - Sep 2023",
-description: "I was given the responsibility to handle the school's tiktok social media, as well as to handle several events during my time.",
+description: "I was given the responsibility to handle the school's tiktok social media, as well as to handle several events during my time.<br><br> Tiktok: sagarmatha",
 chips: [
 "Social Media",
 "Creativity & Innovation",
 "Leadership"
 ],
 images: ["./IMG_20260518_192134.jpg","./IMG_20260518_192148.jpg"]
-}
-];
-
+}];
 // PAGE - Certification ------------------------------
 const cert_title_description = 'Expertise & Skills';
 const cert_title = 'Certifications';
@@ -1064,6 +1108,16 @@ renderWorkExperience(workExperience, "experience-container");
 
 document.getElementById("title_work_experience").innerText = title_work_experience;
 document.getElementById("title_work_experience2").innerText = title_work_experience2;
+
+// Organization Page ------------------------------
+document.getElementById("org_title_description").innerText = org_title_description;
+document.getElementById("org_title").innerText = org_title;
+document.getElementById("org_description").innerText = org_description;
+
+renderWorkExperience(orgData, "organization-container");
+
+document.getElementById("title_org_experience").innerText = title_org_experience;
+document.getElementById("title_org_experience2").innerText = title_org_experience2;
 
 
 // Certification Page ---------------------
