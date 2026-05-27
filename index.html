@@ -1101,7 +1101,8 @@ function renderWorkExperience(data, containerId) {
 
 function slideExp(index, direction) {
   const slider = document.getElementById(`slider-${index}`);
-  if (  const slideWidth = slider.clientWidth;
+  if (slider) {
+   const slideWidth = slider.clientWidth;
     slider.scrollBy({
       left: slideWidth * direction,
       behavior: 'smooth'
