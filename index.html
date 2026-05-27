@@ -1023,7 +1023,7 @@ function renderWorkExperience(data, containerId) {
       exp.chips.map(chip => `<span class="exp-chip">${chip}</span>`).join("") :
       "";
     
-    // --- Logik Pembuatan Slider Gambar ---
+    
     let sliderHTML = "";
     if (exp.images && exp.images.length > 0) {
       const imagesRender = exp.images.map(imgUrl => `
@@ -1031,6 +1031,7 @@ function renderWorkExperience(data, containerId) {
           flex: 0 0 100%; 
           width: 100%; 
           aspect-ratio: 16 / 10; 
+          object-fit: cover;
           border-radius: 6px;
           scroll-snap-align: start;
         " alt="Documentation">
@@ -1044,8 +1045,8 @@ function renderWorkExperience(data, containerId) {
             overflow-x: auto; 
             scroll-behavior: smooth; 
             scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Hilangkan scrollbar di Firefox */
-            -ms-overflow-style: none; /* Hilangkan scrollbar di IE/Edge */
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
           " class="no-scrollbar">
             ${imagesRender}
           </div>
@@ -1086,7 +1087,7 @@ function renderWorkExperience(data, containerId) {
           </div>
           ${exp.description ? `<p class="exp-desc">${exp.description}</p>` : ""}
           
-          <!-- Slider disisipkan di sini -->
+          
           ${sliderHTML}
 
           <div class="exp-chips" style="margin-top: 15px;">
@@ -1097,11 +1098,10 @@ function renderWorkExperience(data, containerId) {
     `;
   }).join("");
 }
-// --- Fungsi Global Untuk Menggeser Slider ---
+
 function slideExp(index, direction) {
   const slider = document.getElementById(`slider-${index}`);
-  if (slider) {
-    // Menggeser sejauh lebar kontainer slider itu sendiri
+  if (
     const slideWidth = slider.clientWidth;
     slider.scrollBy({
       left: slideWidth * direction,
