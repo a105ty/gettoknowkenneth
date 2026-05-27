@@ -1030,8 +1030,7 @@ function renderWorkExperience(data, containerId) {
         <img src="${imgUrl}" style="
           flex: 0 0 100%; 
           width: 100%; 
-          aspect-ratio: 16 / 9; /* Kunci rasio gambar menjadi memanjang (landscape). Bisa diubah ke 4/3 atau 3/2 sesuai selera */
-          object-fit: cover; /* Memastikan gambar memenuhi bingkai rasio 16:9 dengan rapi */
+          aspect-ratio: 16 / 10; 
           border-radius: 6px;
           scroll-snap-align: start;
         " alt="Documentation">
@@ -1039,7 +1038,7 @@ function renderWorkExperience(data, containerId) {
       
       sliderHTML = `
         <div class="exp-slider-wrapper" style="position: relative; margin-top: 15px; overflow: hidden; border-radius: 6px;">
-          <!-- Kontainer Gambar (Scroll Horizontal) -->
+  
           <div id="slider-${index}" style="
             display: flex; 
             overflow-x: auto; 
@@ -1051,7 +1050,6 @@ function renderWorkExperience(data, containerId) {
             ${imagesRender}
           </div>
           
-          <!-- Tombol Navigasi Slider (Hanya muncul jika gambar > 1) -->
           ${exp.images.length > 1 ? `
             <button onclick="slideExp(${index}, -1)" style="
               position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
